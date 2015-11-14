@@ -9,12 +9,10 @@ data <- read.csv(unz("activity.zip","activity.csv"),header=TRUE, stringsAsFactor
 str(data)
 ```
 
-```
-## 'data.frame':	17568 obs. of  3 variables:
-##  $ steps   : int  NA NA NA NA NA NA NA NA NA NA ...
-##  $ date    : chr  "2012-10-01" "2012-10-01" "2012-10-01" "2012-10-01" ...
-##  $ interval: int  0 5 10 15 20 25 30 35 40 45 ...
-```
+'data.frame':	17568 obs. of  3 variables:
+ $ steps   : int  NA NA NA NA NA NA NA NA NA NA ...
+ $ date    : chr  "2012-10-01" "2012-10-01" "2012-10-01" "2012-10-01" ...
+ $ interval: int  0 5 10 15 20 25 30 35 40 45 ...
 
 ```r
 data$date <- as.Date(data$date,format="%Y-%m-%d")
@@ -22,12 +20,10 @@ data$interval <- as.factor(data$interval)
 str(data)
 ```
 
-```
-## 'data.frame':	17568 obs. of  3 variables:
-##  $ steps   : int  NA NA NA NA NA NA NA NA NA NA ...
-##  $ date    : Date, format: "2012-10-01" "2012-10-01" ...
-##  $ interval: Factor w/ 288 levels "0","5","10","15",..: 1 2 3 4 5 6 7 8 9 10 ...
-```
+'data.frame':	17568 obs. of  3 variables:
+ $ steps   : int  NA NA NA NA NA NA NA NA NA NA ...
+ $ date    : Date, format: "2012-10-01" "2012-10-01" ...
+ $ interval: Factor w/ 288 levels "0","5","10","15",..: 1 2 3 4 5 6 7 8 9 10 ...
 
 ## What is mean total number of steps taken per day? - ignore missing values
 Calculate the total number of steps taken per day
@@ -46,10 +42,8 @@ hist(stepspd)
 summary(stepspd)
 ```
 
-```
-##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
-##      41    8841   10760   10770   13290   21190       8
-```
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+     41    8841   10760   10770   13290   21190       8 
 
 ```r
 means <- mean(stepspd, na.rm = T)
@@ -97,17 +91,13 @@ intna <- is.na(data$interval)
 sum(datena) # no missing values in date
 ```
 
-```
-## [1] 0
-```
+[1] 0
 
 ```r
 sum(intna) # no missing values in interval
 ```
 
-```
-## [1] 0
-```
+[1] 0
 
 ```r
 library(plyr)
@@ -120,9 +110,7 @@ data2 <- ddply(data, ~ interval, transform, steps = impute(steps, mean))
 sum(is.na(data$steps))
 ```
 
-```
-## [1] 2304
-```
+[1] 2304
 
 ```r
 stepspd2 <- tapply(data2$steps,data2$date,sum)
@@ -135,10 +123,8 @@ hist(stepspd2)
 summary(stepspd2)
 ```
 
-```
-##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-##      41    9819   10770   10770   12810   21190
-```
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+     41    9819   10770   10770   12810   21190 
 
 ```r
 means2 <- mean(stepspd2, na.rm = T)

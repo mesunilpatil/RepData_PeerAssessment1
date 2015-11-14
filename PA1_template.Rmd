@@ -8,7 +8,7 @@ output:
 
 ## Loading and preprocessing the data
 
-```{r read data, echo=TRUE}
+```{r read data, echo=TRUE, results = "asis"}
 data <- read.csv(unz("activity.zip","activity.csv"),header=TRUE, stringsAsFactors = FALSE)
 str(data)
 data$date <- as.Date(data$date,format="%Y-%m-%d")
@@ -21,7 +21,7 @@ Calculate the total number of steps taken per day
 Make a histogram of the total number of steps taken each day
 Mean and median of the total number of steps taken per day
 
-```{r total steps, echo=TRUE}
+```{r total steps, echo=TRUE, results = "asis"}
 stepspd <- tapply(data$steps,data$date,sum)
 hist(stepspd)
 summary(stepspd)
@@ -37,7 +37,7 @@ median is `r medians`.
 Make a time series plot (i.e. type = "l") of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all days (y-axis)
 Which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps?
 
-```{r pattern, echo=TRUE}
+```{r pattern, echo=TRUE, results = "asis"}
 p <- tapply(data$steps,data$interval,mean,na.rm = T)
 plot(p, type = "l", main = "Average steps across all days", 
      xlab = "Interval", ylab = "Average steps")
@@ -54,7 +54,7 @@ the interval: `r maxint`
 Impute missing values
 <http://www.mail-archive.com/r-help@r-project.org/msg58289.html>
 
-```{r impute_missing, echo=TRUE}
+```{r impute_missing, echo=TRUE, results = "asis"}
 narows <- nrow(data)-nrow(data[complete.cases(data),])
 
 stepsna <- is.na(data$steps)
@@ -89,7 +89,7 @@ As a result of imputing missing values the median has incrased but the mean rema
 ## Are there differences in activity patterns between weekdays and weekends?
 Create a new factor variable in the dataset with two levels - "weekday" and "weekend" indicating whether a given date is a weekday or weekend day.
 
-```{r DayofWeek, echo=TRUE}
+```{r DayofWeek, echo=TRUE, results = "asis"}
 
 #create a vector of weekdays
 weekdays1 <- c('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday')
@@ -101,7 +101,7 @@ data2$wDay <- factor((weekdays(data2$date) %in% weekdays1),
 ```        
 Make a panel plot containing a time series plot (i.e. type = "l") of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all weekday days or weekend days (y-axis)
 
-```{r DayofWeekplot, echo=TRUE}
+```{r DayofWeekplot, echo=TRUE, results = "asis"}
 
 p <- aggregate(steps ~ wDay+interval, data= data2, mean)
 library(lattice)
